@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Join on Married Life</title><link rel="stylesheet" href="style.css">
+<style>
+  .code { display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin: 20px 0 8px; direction:ltr; }
+  .code span { width: 2.2em; height: 2.8em; display:flex; align-items:center; justify-content:center;
+    font: 700 1.5rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--card);
+    border: 1px solid var(--line); border-radius: 10px; }
+  .actions { display:flex; flex-direction:column; gap:12px; margin: 24px 0; }
+  .button { display:block; text-align:center; padding: 14px 18px; border-radius: 14px; font-weight: 600;
+    text-decoration:none; border: 1px solid var(--accent); }
+  .button.primary { background: var(--accent); color: #fff; }
+  @media (prefers-color-scheme: dark) { .button.primary { color: #141215; } }
+  .hidden { display:none; }
+  ol { padding-inline-start: 1.3em; }
+</style>
+</head>
+<body><main>
+<nav><a href="./">Married Life</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a></nav>
+<h1>You're invited</h1>
+<p class="muted">Your partner invited you to connect on Married Life. Nothing is shared until each of you turns it on.</p>
+
+<div id="with-code" class="hidden">
+  <div class="card">
+    <p style="margin:0;text-align:center">Your invitation code</p>
+    <div class="code" id="code" aria-label="Invitation code"></div>
+    <p class="muted" style="margin:0;text-align:center;font-size:.9rem">It expires 24 hours after it was created.</p>
+  </div>
+  <div class="actions">
+    <a class="button primary" id="open">Open in Married Life</a>
+    <a class="button" href="https://apps.apple.com/app/id6839338846">Get Married Life on the App Store</a>
+  </div>
+  <h2>If the button doesn't open the app</h2>
+  <ol>
+    <li>Install Married Life from the App Store and open it.</li>
+    <li>Tap <em>Have a code?</em></li>
+    <li>Enter the code above, check who it's from, and accept.</li>
+  </ol>
+</div>
+
+<div id="no-code" class="hidden card">
+  <p style="margin:0">This link is missing its code. Ask your partner to send the invitation again from Married Life.</p>
+</div>
+
+<section class="ar" lang="ar">
+  <h1>دعوة للانضمام</h1>
+  <p>دعاك شريكك للارتباط في Married Life. لا تتم مشاركة أي شيء حتى يفعّل كلٌّ منكما المشاركة بنفسه.</p>
+  <p>اضغط «Open in Married Life» لفتح التطبيق. إن لم يفتح: ثبّت التطبيق من App Store، ثم اضغط «لديك رمز؟» وأدخل الرمز أعلاه.</p>
+</section>
+
+<script>
+  // The code is read from ?c=CODE and only ever shown as text (8 letters/digits, nothing else).
+  (function () {
+    var raw = new URLSearchParams(location.search).get("c") || "";
+    var code = raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+    if (code.length !== 8) {
+      document.getElementById("no-code").classList.remove("hidden");
+      return;
+    }
+    var box = document.getElementById("code");
+    for (var i = 0; i < code.length; i++) {
+      var span = document.createElement("span");
+      span.textContent = code[i];
+      box.appendChild(span);
+    }
+    document.getElementById("open").href = "marriedlife://join/" + code;
+    document.getElementById("with-code").classList.remove("hidden");
+  })();
+</script>
+</main></body></html>
