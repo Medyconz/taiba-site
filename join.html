@@ -66,6 +66,11 @@
     }
     document.getElementById("open").href = "marriedlife://join/" + code;
     document.getElementById("with-code").classList.remove("hidden");
+    // On an iPhone with the app installed, go straight to the invitation (iOS asks "Open?" once).
+    // Without the app nothing happens and this page stays, with the App Store link.
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+      setTimeout(function () { location.href = "marriedlife://join/" + code; }, 400);
+    }
   })();
 </script>
 </main></body></html>
